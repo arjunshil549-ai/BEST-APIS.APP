@@ -141,6 +141,7 @@
 
       <section class="section" aria-labelledby="contact-heading">
         <h2 id="contact-heading">Direct Contact Form</h2>
+        <!-- TODO: Replace "your-form-id" with your actual Formspree form ID before going live. -->
         <form action="https://formspree.io/f/your-form-id" method="POST">
           <label>
             Name
@@ -152,8 +153,17 @@
           </label>
           <label>
             Offer Amount (USD)
-            <input type="number" name="offer_amount_usd" min="100" step="1" required />
+            <input
+              type="number"
+              name="offer_amount_usd"
+              min="100"
+              step="1"
+              placeholder="e.g. 2500"
+              aria-describedby="offer-help"
+              required
+            />
           </label>
+          <p id="offer-help" class="footer-note">Minimum offer is set to $100 USD.</p>
           <button type="submit">Submit Offer</button>
         </form>
         <p class="footer-note">Replace <strong>your-form-id</strong> with your actual Formspree form ID.</p>
