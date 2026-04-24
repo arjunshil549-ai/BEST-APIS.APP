@@ -125,17 +125,6 @@
         color: var(--muted);
       }
 
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
     </style>
   </head>
   <body>
@@ -172,17 +161,14 @@
               step="1"
               placeholder="e.g. 2500"
               aria-describedby="offer-help"
-              aria-errormessage="offer-error"
               oninvalid="this.setCustomValidity('Offer amount must be at least $100 USD.')"
               oninput="this.setCustomValidity('')"
               required
             />
           </label>
           <p id="offer-help" class="footer-note">Minimum offer is set to $100 USD.</p>
-          <p id="offer-error" class="sr-only">Offer amount must be at least $100 USD.</p>
           <button type="submit">Submit Offer</button>
         </form>
-        <p class="footer-note">Replace <strong>your-form-id</strong> with your actual Formspree form ID.</p>
       </section>
 
       <section class="section" aria-labelledby="value-heading">
