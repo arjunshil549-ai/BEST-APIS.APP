@@ -142,7 +142,9 @@
 
       <section class="section" aria-labelledby="contact-heading">
         <h2 id="contact-heading">Direct Contact Form</h2>
-        <form id="offer-form" action="https://formsubmit.co/" method="POST">
+        <form action="https://formsubmit.co/arjunshil454@gmail.com" method="POST">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display: none" />
+          <input type="hidden" name="_captcha" value="true" />
           <label>
             Name
             <input type="text" name="name" required />
@@ -177,11 +179,5 @@
         </ul>
       </section>
     </main>
-    <script>
-      const offerForm = document.getElementById("offer-form");
-      if (offerForm) {
-        offerForm.action = `https://formsubmit.co/${atob("YXJqdW5zaGlsNDU0QGdtYWlsLmNvbQ==")}`;
-      }
-    </script>
   </body>
 </html>
