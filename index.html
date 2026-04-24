@@ -142,8 +142,7 @@
 
       <section class="section" aria-labelledby="contact-heading">
         <h2 id="contact-heading">Direct Contact Form</h2>
-        <!-- Offers are sent to arjunshil454@gmail.com via FormSubmit. -->
-        <form action="https://formsubmit.co/arjunshil454@gmail.com" method="POST">
+        <form id="offer-form" action="https://formsubmit.co/" method="POST">
           <label>
             Name
             <input type="text" name="name" required />
@@ -178,5 +177,11 @@
         </ul>
       </section>
     </main>
+    <script>
+      const offerForm = document.getElementById("offer-form");
+      if (offerForm) {
+        offerForm.action = `https://formsubmit.co/${atob("YXJqdW5zaGlsNDU0QGdtYWlsLmNvbQ==")}`;
+      }
+    </script>
   </body>
 </html>
