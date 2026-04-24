@@ -142,7 +142,8 @@
 
       <section class="section" aria-labelledby="contact-heading">
         <h2 id="contact-heading">Direct Contact Form</h2>
-        <form action="mailto:offers@bestapis.app" method="POST" enctype="text/plain">
+        <!-- Replace "your-form-id" with your Formspree form ID before deployment. -->
+        <form action="https://formspree.io/f/your-form-id" method="POST">
           <label>
             Name
             <input type="text" name="name" required />
@@ -160,8 +161,6 @@
               step="1"
               placeholder="e.g. 2500"
               aria-describedby="offer-help"
-              oninvalid="this.setCustomValidity('Offer amount must be at least $100 USD.')"
-              oninput="this.setCustomValidity('')"
               required
             />
           </label>
