@@ -1,9 +1,11 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   Cloud,
   Cpu,
   CreditCard,
-  Database,
   Globe,
   Search,
   ShieldCheck,
@@ -36,52 +38,626 @@ const highlights: Array<{
   },
 ];
 
+const apiCategories = [
+  "AI/LLM",
+  "FinTech",
+  "DevTools",
+  "Security",
+  "Communication",
+] as const;
+
+type ApiCategory = (typeof apiCategories)[number];
+
+type ApiEntry = {
+  name: string;
+  category: ApiCategory;
+  description: string;
+};
+
 const categories: Array<{
-  title: string;
+  title: ApiCategory;
   description: string;
   icon: LucideIcon;
 }> = [
   {
-    title: "AI Models",
-    description: "LLMs, multimodal reasoning, and autonomous agent runtimes.",
+    title: "AI/LLM",
+    description: "Frontier LLMs, multimodal inference, and agent platforms.",
     icon: Cpu,
   },
   {
-    title: "FinTech & Payments",
-    description: "Payments, billing, fraud detection, and financial data rails.",
+    title: "FinTech",
+    description: "Payments, banking, fraud, and financial data rails.",
     icon: CreditCard,
   },
   {
     title: "DevTools",
-    description: "Observability, deployment, and productivity APIs for teams.",
+    description: "Infrastructure, observability, and productivity APIs.",
     icon: Cloud,
   },
   {
-    title: "Data & Search",
-    description: "Vector databases, search, analytics, and AI-ready pipelines.",
-    icon: Database,
-  },
-  {
-    title: "Global Infrastructure",
-    description: "Edge compute, geo routing, and performance acceleration.",
-    icon: Globe,
-  },
-  {
-    title: "Security & Trust",
-    description: "Compliance tooling, identity, and AI governance platforms.",
+    title: "Security",
+    description: "Identity, compliance, and threat detection tooling.",
     icon: ShieldCheck,
+  },
+  {
+    title: "Communication",
+    description: "Messaging, voice, email, and engagement APIs.",
+    icon: Globe,
   },
 ];
 
 const metrics = [
-  { value: "100+", label: "APIs queued for launch" },
-  { value: "6", label: "Core categories live" },
-  { value: "1", label: "Unified marketplace" },
+  { value: "100", label: "Top APIs in the 2026 directory" },
+  { value: "5", label: "Core categories covered" },
+  { value: "24/7", label: "Signal monitoring for updates" },
+];
+
+const aiApis: ApiEntry[] = [
+  {
+    name: "OpenAI",
+    category: "AI/LLM",
+    description: "Frontier LLMs and reasoning APIs for text, vision, and agents.",
+  },
+  {
+    name: "Anthropic",
+    category: "AI/LLM",
+    description: "Safety-focused Claude models for conversational tool use.",
+  },
+  {
+    name: "Google Gemini",
+    category: "AI/LLM",
+    description: "Multimodal Gemini models with long context and tools.",
+  },
+  {
+    name: "Mistral AI",
+    category: "AI/LLM",
+    description: "Open and commercial LLMs optimized for fast inference.",
+  },
+  {
+    name: "Cohere",
+    category: "AI/LLM",
+    description: "Enterprise-grade LLMs for search, RAG, and workflows.",
+  },
+  {
+    name: "Hugging Face",
+    category: "AI/LLM",
+    description: "Model hosting and inference APIs for open-source LLMs.",
+  },
+  {
+    name: "Perplexity",
+    category: "AI/LLM",
+    description: "Answer engine APIs blending search with LLM reasoning.",
+  },
+  {
+    name: "Together AI",
+    category: "AI/LLM",
+    description: "High-throughput inference for open models and tuning.",
+  },
+  {
+    name: "Groq",
+    category: "AI/LLM",
+    description: "Ultra-low-latency LLM inference on LPU hardware.",
+  },
+  {
+    name: "Fireworks AI",
+    category: "AI/LLM",
+    description: "Serverless LLM inference and fine-tuning for open models.",
+  },
+  {
+    name: "Stability AI",
+    category: "AI/LLM",
+    description: "Generative image, video, and audio model APIs.",
+  },
+  {
+    name: "Replicate",
+    category: "AI/LLM",
+    description: "Hosted inference for thousands of open-source models.",
+  },
+  {
+    name: "Runway",
+    category: "AI/LLM",
+    description: "Video generation and editing APIs for creative workflows.",
+  },
+  {
+    name: "ElevenLabs",
+    category: "AI/LLM",
+    description: "High-fidelity text-to-speech and voice cloning APIs.",
+  },
+  {
+    name: "AssemblyAI",
+    category: "AI/LLM",
+    description: "Speech-to-text and audio intelligence APIs.",
+  },
+  {
+    name: "Deepgram",
+    category: "AI/LLM",
+    description: "Real-time speech recognition and audio understanding APIs.",
+  },
+  {
+    name: "Adept",
+    category: "AI/LLM",
+    description: "Agentic model APIs for task execution across apps.",
+  },
+  {
+    name: "Character.AI",
+    category: "AI/LLM",
+    description: "Conversational character APIs for interactive agents.",
+  },
+  {
+    name: "Reka AI",
+    category: "AI/LLM",
+    description: "Research-grade multimodal LLM APIs for enterprise use.",
+  },
+  {
+    name: "xAI",
+    category: "AI/LLM",
+    description: "Grok models for real-time reasoning and analysis.",
+  },
+];
+
+const fintechApis: ApiEntry[] = [
+  {
+    name: "Stripe",
+    category: "FinTech",
+    description: "Payments, billing, and treasury APIs for internet businesses.",
+  },
+  {
+    name: "Plaid",
+    category: "FinTech",
+    description: "Bank account connectivity and financial data APIs.",
+  },
+  {
+    name: "Adyen",
+    category: "FinTech",
+    description: "Global payment processing and risk management APIs.",
+  },
+  {
+    name: "Checkout.com",
+    category: "FinTech",
+    description: "Unified payments and fraud tooling with global coverage.",
+  },
+  {
+    name: "PayPal",
+    category: "FinTech",
+    description: "Digital wallet, checkout, and payout APIs.",
+  },
+  {
+    name: "Braintree",
+    category: "FinTech",
+    description: "Flexible payment gateway APIs for web and mobile.",
+  },
+  {
+    name: "Square",
+    category: "FinTech",
+    description: "Point-of-sale and payment APIs for omnichannel commerce.",
+  },
+  {
+    name: "Wise",
+    category: "FinTech",
+    description: "International transfer and FX APIs.",
+  },
+  {
+    name: "Ramp",
+    category: "FinTech",
+    description: "Corporate card and spend management APIs.",
+  },
+  {
+    name: "Brex",
+    category: "FinTech",
+    description: "Expense management and card issuance APIs.",
+  },
+  {
+    name: "Mercury",
+    category: "FinTech",
+    description: "Business banking APIs designed for startups.",
+  },
+  {
+    name: "Marqeta",
+    category: "FinTech",
+    description: "Card issuing and payment processing APIs.",
+  },
+  {
+    name: "Alloy",
+    category: "FinTech",
+    description: "Identity verification and compliance orchestration APIs.",
+  },
+  {
+    name: "Tink",
+    category: "FinTech",
+    description: "Open banking connectivity and payments APIs.",
+  },
+  {
+    name: "Finicity",
+    category: "FinTech",
+    description: "Consumer financial data access APIs.",
+  },
+  {
+    name: "Unit",
+    category: "FinTech",
+    description: "Embedded banking and card issuing APIs.",
+  },
+  {
+    name: "Lithic",
+    category: "FinTech",
+    description: "Card issuing and transaction controls APIs.",
+  },
+  {
+    name: "Moov",
+    category: "FinTech",
+    description: "Money movement and payout infrastructure APIs.",
+  },
+  {
+    name: "Sila",
+    category: "FinTech",
+    description: "ACH payments and identity compliance APIs.",
+  },
+  {
+    name: "Sardine",
+    category: "FinTech",
+    description: "Fraud prevention and risk scoring APIs.",
+  },
+];
+
+const devtoolApis: ApiEntry[] = [
+  {
+    name: "Supabase",
+    category: "DevTools",
+    description: "Postgres database, auth, and storage APIs for builders.",
+  },
+  {
+    name: "Vercel",
+    category: "DevTools",
+    description: "Frontend deployment, edge, and analytics APIs.",
+  },
+  {
+    name: "Netlify",
+    category: "DevTools",
+    description: "Web hosting, functions, and build automation APIs.",
+  },
+  {
+    name: "Render",
+    category: "DevTools",
+    description: "Managed cloud deploys for services and databases.",
+  },
+  {
+    name: "Fly.io",
+    category: "DevTools",
+    description: "Global app deployment with edge region APIs.",
+  },
+  {
+    name: "Railway",
+    category: "DevTools",
+    description: "Instant infrastructure and environment management APIs.",
+  },
+  {
+    name: "PlanetScale",
+    category: "DevTools",
+    description: "Serverless MySQL platform and branching APIs.",
+  },
+  {
+    name: "Neon",
+    category: "DevTools",
+    description: "Serverless Postgres with branching and autoscale APIs.",
+  },
+  {
+    name: "Aiven",
+    category: "DevTools",
+    description: "Managed open-source data services APIs.",
+  },
+  {
+    name: "Postman",
+    category: "DevTools",
+    description: "API testing, monitoring, and collaboration APIs.",
+  },
+  {
+    name: "Sentry",
+    category: "DevTools",
+    description: "Error tracking and performance monitoring APIs.",
+  },
+  {
+    name: "Datadog",
+    category: "DevTools",
+    description: "Observability and metrics ingestion APIs.",
+  },
+  {
+    name: "New Relic",
+    category: "DevTools",
+    description: "APM, logs, and telemetry APIs.",
+  },
+  {
+    name: "GitHub",
+    category: "DevTools",
+    description: "Code hosting, automation, and webhook APIs.",
+  },
+  {
+    name: "GitLab",
+    category: "DevTools",
+    description: "CI/CD, repo, and DevSecOps APIs.",
+  },
+  {
+    name: "Docker",
+    category: "DevTools",
+    description: "Container registry and build automation APIs.",
+  },
+  {
+    name: "Hasura",
+    category: "DevTools",
+    description: "Instant GraphQL APIs on top of databases.",
+  },
+  {
+    name: "Prisma",
+    category: "DevTools",
+    description: "Database toolkit and type-safe ORM APIs.",
+  },
+  {
+    name: "Temporal",
+    category: "DevTools",
+    description: "Durable workflow orchestration APIs.",
+  },
+  {
+    name: "LaunchDarkly",
+    category: "DevTools",
+    description: "Feature flagging and experimentation APIs.",
+  },
+];
+
+const securityApis: ApiEntry[] = [
+  {
+    name: "Okta",
+    category: "Security",
+    description: "Identity, SSO, and access management APIs.",
+  },
+  {
+    name: "Auth0",
+    category: "Security",
+    description: "Developer-friendly authentication and authorization APIs.",
+  },
+  {
+    name: "Cloudflare",
+    category: "Security",
+    description: "Edge security, WAF, and bot management APIs.",
+  },
+  {
+    name: "Snyk",
+    category: "Security",
+    description: "Developer security and dependency scanning APIs.",
+  },
+  {
+    name: "Wiz",
+    category: "Security",
+    description: "Cloud security posture and risk prioritization APIs.",
+  },
+  {
+    name: "Orca Security",
+    category: "Security",
+    description: "Agentless cloud workload protection APIs.",
+  },
+  {
+    name: "Lacework",
+    category: "Security",
+    description: "Behavioral threat detection and compliance APIs.",
+  },
+  {
+    name: "SentinelOne",
+    category: "Security",
+    description: "Endpoint protection and automated response APIs.",
+  },
+  {
+    name: "CrowdStrike",
+    category: "Security",
+    description: "Threat intelligence and endpoint security APIs.",
+  },
+  {
+    name: "Fortinet",
+    category: "Security",
+    description: "Network security and firewall management APIs.",
+  },
+  {
+    name: "Check Point",
+    category: "Security",
+    description: "Enterprise security management and threat prevention APIs.",
+  },
+  {
+    name: "Zscaler",
+    category: "Security",
+    description: "Zero trust network access and security APIs.",
+  },
+  {
+    name: "1Password",
+    category: "Security",
+    description: "Secrets management and password vault APIs.",
+  },
+  {
+    name: "Bitwarden",
+    category: "Security",
+    description: "Open-source password management APIs.",
+  },
+  {
+    name: "JumpCloud",
+    category: "Security",
+    description: "Directory, device, and identity management APIs.",
+  },
+  {
+    name: "Vanta",
+    category: "Security",
+    description: "Automated compliance and audit readiness APIs.",
+  },
+  {
+    name: "Drata",
+    category: "Security",
+    description: "Continuous compliance monitoring APIs.",
+  },
+  {
+    name: "Secureframe",
+    category: "Security",
+    description: "Compliance automation and evidence collection APIs.",
+  },
+  {
+    name: "Imperva",
+    category: "Security",
+    description: "Application security and data protection APIs.",
+  },
+  {
+    name: "Abnormal Security",
+    category: "Security",
+    description: "Email security and phishing defense APIs.",
+  },
+];
+
+const communicationApis: ApiEntry[] = [
+  {
+    name: "Twilio",
+    category: "Communication",
+    description: "Messaging, voice, and video APIs for engagement.",
+  },
+  {
+    name: "SendGrid",
+    category: "Communication",
+    description: "Transactional and marketing email delivery APIs.",
+  },
+  {
+    name: "Vonage",
+    category: "Communication",
+    description: "Voice, SMS, and programmable communications APIs.",
+  },
+  {
+    name: "MessageBird",
+    category: "Communication",
+    description: "Omnichannel messaging and engagement APIs.",
+  },
+  {
+    name: "Telnyx",
+    category: "Communication",
+    description: "Programmable voice, SMS, and carrier APIs.",
+  },
+  {
+    name: "Plivo",
+    category: "Communication",
+    description: "Voice and SMS APIs with global coverage.",
+  },
+  {
+    name: "Sinch",
+    category: "Communication",
+    description: "Enterprise messaging and verification APIs.",
+  },
+  {
+    name: "Bandwidth",
+    category: "Communication",
+    description: "Carrier-grade voice and messaging APIs.",
+  },
+  {
+    name: "Infobip",
+    category: "Communication",
+    description: "Global messaging, chat, and email APIs.",
+  },
+  {
+    name: "Slack",
+    category: "Communication",
+    description: "Team messaging and workflow automation APIs.",
+  },
+  {
+    name: "Microsoft Teams",
+    category: "Communication",
+    description: "Collaboration and meeting integration APIs.",
+  },
+  {
+    name: "Discord",
+    category: "Communication",
+    description: "Community messaging and bot APIs.",
+  },
+  {
+    name: "Zoom",
+    category: "Communication",
+    description: "Video meetings and webinar APIs.",
+  },
+  {
+    name: "Intercom",
+    category: "Communication",
+    description: "Customer support chat and automation APIs.",
+  },
+  {
+    name: "Zendesk",
+    category: "Communication",
+    description: "Support ticketing and messaging APIs.",
+  },
+  {
+    name: "Pusher",
+    category: "Communication",
+    description: "Realtime pub/sub and WebSocket APIs.",
+  },
+  {
+    name: "Stream",
+    category: "Communication",
+    description: "Chat, activity feeds, and video APIs.",
+  },
+  {
+    name: "OneSignal",
+    category: "Communication",
+    description: "Push notification and messaging APIs.",
+  },
+  {
+    name: "Braze",
+    category: "Communication",
+    description: "Customer engagement and lifecycle messaging APIs.",
+  },
+  {
+    name: "Brevo",
+    category: "Communication",
+    description: "Marketing automation and email APIs.",
+  },
+];
+
+const apiDirectory: ApiEntry[] = [
+  ...aiApis,
+  ...fintechApis,
+  ...devtoolApis,
+  ...securityApis,
+  ...communicationApis,
 ];
 
 export default function Home() {
+  const [query, setQuery] = useState("");
+  const trimmedQuery = query.trim();
+  const filteredDirectory = useMemo(() => {
+    const normalizedQuery = trimmedQuery.toLowerCase();
+    if (!normalizedQuery) {
+      return apiDirectory;
+    }
+
+    return apiDirectory.filter((entry) =>
+      [entry.name, entry.category, entry.description].some((value) =>
+        value.toLowerCase().includes(normalizedQuery),
+      ),
+    );
+  }, [trimmedQuery]);
+  const groupedDirectory = useMemo(
+    () =>
+      apiCategories.map((category) => ({
+        category,
+        items: filteredDirectory.filter((entry) => entry.category === category),
+      })),
+    [filteredDirectory],
+  );
+
   return (
     <div className="flex min-h-screen flex-col">
+      <div className="sticky top-0 z-50 border-b border-cyan-200/40 bg-gradient-to-r from-cyan-600 via-blue-600 to-violet-600 text-white">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-3 text-sm font-semibold sm:flex-row sm:items-center sm:justify-between">
+          <span>
+            <span role="img" aria-label="Rocket">
+              🚀
+            </span>{" "}
+            This premium domain is for sale! Acquire bestapis.app to build the
+            future of AI Agents.
+          </span>
+          <a
+            className="inline-flex items-center justify-center rounded-full bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-900 shadow-lg shadow-slate-950/30 transition hover:bg-white"
+            href="#contact"
+          >
+            Contact to Buy
+          </a>
+        </div>
+      </div>
       <header className="border-b border-white/10 bg-slate-950/40 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
           <div className="flex items-center gap-4">
@@ -123,9 +699,9 @@ export default function Home() {
                 </span>
               </h1>
               <p className="max-w-2xl text-lg text-slate-300">
-                bestapis.app curates the most reliable APIs across AI models,
-                fintech, devtools, and data infrastructure—so you can ship agentic
-                products faster with total confidence.
+                bestapis.app curates the most reliable APIs across AI/LLM,
+                fintech, devtools, security, and communication—so you can ship
+                agentic products faster with total confidence.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-4">
@@ -164,10 +740,16 @@ export default function Home() {
               </span>
             </div>
             <div className="relative mt-5">
+              <label htmlFor="api-search" className="sr-only">
+                Search APIs
+              </label>
               <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
               <input
+                id="api-search"
                 type="search"
                 placeholder="Search by API name, category, or capability"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
                 className="w-full rounded-2xl border border-slate-800/80 bg-slate-950/70 py-4 pl-12 pr-4 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
               />
             </div>
@@ -197,22 +779,34 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="directory" className="space-y-8">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="space-y-2">
+        <section id="directory" className="space-y-10 scroll-mt-24">
+          <div className="flex flex-wrap items-start justify-between gap-6">
+            <div className="space-y-3">
               <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/70">
-                premium categories
+                top 100 api directory
               </p>
               <h2 className="text-2xl font-semibold text-white">
-                Built for modern AI product teams
+                The 2026 API landscape at a glance
               </h2>
+              <p className="max-w-2xl text-sm text-slate-300">
+                Explore the most in-demand APIs across five critical categories.
+                Filter by name, category, or capability to shortlist partners for
+                your next AI-driven product.
+              </p>
             </div>
-            <a
-              className="text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
-              href="mailto:hello@bestapis.app?subject=Partnership%20Inquiry"
-            >
-              Become a partner →
-            </a>
+            <div className="flex flex-col items-start gap-2 text-sm text-slate-400">
+              <span>
+                {trimmedQuery
+                  ? `Showing ${filteredDirectory.length} of ${apiDirectory.length} APIs`
+                  : `Showing all ${apiDirectory.length} APIs`}
+              </span>
+              <a
+                className="text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
+                href="mailto:hello@bestapis.app?subject=Partnership%20Inquiry"
+              >
+                Become a partner →
+              </a>
+            </div>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {categories.map((category) => {
@@ -234,6 +828,50 @@ export default function Home() {
                 </div>
               );
             })}
+          </div>
+          <div className="space-y-10">
+            {filteredDirectory.length === 0 ? (
+              <div className="rounded-2xl border border-slate-800/80 bg-slate-950/60 p-6 text-sm text-slate-300">
+                No APIs match that search yet. Try a broader keyword.
+              </div>
+            ) : (
+              groupedDirectory.map(({ category, items }) =>
+                items.length ? (
+                  <div key={category} className="space-y-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <h3 className="text-xl font-semibold text-white">
+                        {category}
+                      </h3>
+                      <span className="text-xs uppercase tracking-[0.3em] text-cyan-200/70">
+                        {items.length} APIs
+                      </span>
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                      {items.map((entry) => (
+                        <div
+                          key={entry.name}
+                          className="rounded-2xl border border-slate-800/80 bg-slate-950/60 p-5"
+                        >
+                          <div className="flex items-start justify-between gap-4">
+                            <div>
+                              <h4 className="text-lg font-semibold text-white">
+                                {entry.name}
+                              </h4>
+                              <p className="mt-1 text-xs uppercase tracking-[0.25em] text-cyan-200/70">
+                                {entry.category}
+                              </p>
+                            </div>
+                          </div>
+                          <p className="mt-3 text-sm text-slate-300">
+                            {entry.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null,
+              )
+            )}
           </div>
         </section>
 
@@ -287,6 +925,104 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+
+        <section
+          id="contact"
+          className="grid scroll-mt-24 gap-8 rounded-3xl border border-slate-800/80 bg-slate-900/60 p-8 lg:grid-cols-[1.1fr_0.9fr]"
+        >
+          <div className="space-y-4">
+            <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/70">
+              Get in touch
+            </p>
+            <h2 className="text-2xl font-semibold text-white">
+              Contact to Buy bestapis.app
+            </h2>
+            <p className="text-sm text-slate-300">
+              Interested in acquiring bestapis.app or listing your API? Share
+              your details and we will respond within one business day.
+            </p>
+            <div className="rounded-2xl border border-slate-800/80 bg-slate-950/60 p-4 text-sm text-slate-300">
+              Prefer email? Reach us at{" "}
+              <a
+                className="font-semibold text-cyan-200 hover:text-cyan-100"
+                href="mailto:hello@bestapis.app"
+              >
+                hello@bestapis.app
+              </a>
+              .
+            </div>
+          </div>
+          <form
+            action="https://formsubmit.co/hello@bestapis.app"
+            method="POST"
+            className="space-y-4"
+          >
+            <input type="hidden" name="_subject" value="bestapis.app inquiry" />
+            <input type="hidden" name="_template" value="table" />
+            <input
+              type="text"
+              name="_honey"
+              className="hidden"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-label="Bot detection field - do not fill"
+              aria-hidden="true"
+            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="text-xs uppercase tracking-[0.2em] text-slate-400">
+                Name
+                <input
+                  required
+                  name="name"
+                  type="text"
+                  placeholder="Full name"
+                  minLength={2}
+                  maxLength={80}
+                  className="mt-2 w-full rounded-2xl border border-slate-800/80 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
+                />
+              </label>
+              <label className="text-xs uppercase tracking-[0.2em] text-slate-400">
+                Email
+                <input
+                  required
+                  name="email"
+                  type="email"
+                  placeholder="you@company.com"
+                  maxLength={200}
+                  className="mt-2 w-full rounded-2xl border border-slate-800/80 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
+                />
+              </label>
+            </div>
+            <label className="text-xs uppercase tracking-[0.2em] text-slate-400">
+              Company
+              <input
+                name="company"
+                type="text"
+                placeholder="Company or product"
+                maxLength={120}
+                className="mt-2 w-full rounded-2xl border border-slate-800/80 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
+              />
+            </label>
+            <label className="text-xs uppercase tracking-[0.2em] text-slate-400">
+              Message
+              <textarea
+                required
+                name="message"
+                rows={4}
+                placeholder="Tell us what you are building or your acquisition goals."
+                minLength={10}
+                maxLength={1000}
+                className="mt-2 w-full rounded-2xl border border-slate-800/80 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
+              />
+            </label>
+            <button
+              type="submit"
+              className="inline-flex w-full items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 shadow-[0_0_30px_rgba(34,211,238,0.35)] transition hover:bg-cyan-300"
+            >
+              Send message
+            </button>
+          </form>
         </section>
       </main>
 
