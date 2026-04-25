@@ -640,14 +640,14 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="sticky top-0 z-50 border-b border-cyan-200/40 bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-400 text-slate-950">
+      <div className="sticky top-0 z-50 border-b border-cyan-200/40 bg-gradient-to-r from-cyan-600 via-blue-600 to-violet-600 text-white">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-3 text-sm font-semibold sm:flex-row sm:items-center sm:justify-between">
           <span>
             🚀 This premium domain is for sale! Acquire bestapis.app to build the
             future of AI Agents.
           </span>
           <a
-            className="inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white shadow-lg shadow-slate-950/30 transition hover:bg-slate-900"
+            className="inline-flex items-center justify-center rounded-full bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-900 shadow-lg shadow-slate-950/30 transition hover:bg-white"
             href="#contact"
           >
             Contact to Buy
@@ -931,7 +931,9 @@ export default function Home() {
             <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/70">
               Get in touch
             </p>
-            <h2 className="text-2xl font-semibold text-white">Get in Touch</h2>
+            <h2 className="text-2xl font-semibold text-white">
+              Contact to Buy bestapis.app
+            </h2>
             <p className="text-sm text-slate-300">
               Interested in acquiring bestapis.app or listing your API? Share
               your details and we will respond within one business day.
@@ -963,6 +965,8 @@ export default function Home() {
                   name="name"
                   type="text"
                   placeholder="Full name"
+                  minLength={2}
+                  maxLength={80}
                   className="mt-2 w-full rounded-2xl border border-slate-800/80 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
                 />
               </label>
@@ -973,6 +977,7 @@ export default function Home() {
                   name="email"
                   type="email"
                   placeholder="you@company.com"
+                  maxLength={200}
                   className="mt-2 w-full rounded-2xl border border-slate-800/80 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
                 />
               </label>
@@ -983,6 +988,7 @@ export default function Home() {
                 name="company"
                 type="text"
                 placeholder="Company or product"
+                maxLength={120}
                 className="mt-2 w-full rounded-2xl border border-slate-800/80 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
               />
             </label>
@@ -993,6 +999,8 @@ export default function Home() {
                 name="message"
                 rows={4}
                 placeholder="Tell us what you are building or your acquisition goals."
+                minLength={10}
+                maxLength={1000}
                 className="mt-2 w-full rounded-2xl border border-slate-800/80 bg-slate-950/60 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
               />
             </label>
