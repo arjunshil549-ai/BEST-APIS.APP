@@ -966,7 +966,7 @@ export default function Home() {
               className="hidden"
               tabIndex={-1}
               autoComplete="off"
-              aria-label="Leave this field blank"
+              aria-label="Bot detection field - do not fill"
               aria-hidden="true"
             />
             <div className="grid gap-4 sm:grid-cols-2">
