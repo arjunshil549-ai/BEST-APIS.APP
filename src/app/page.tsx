@@ -956,8 +956,15 @@ export default function Home() {
             className="space-y-4"
           >
             <input type="hidden" name="_subject" value="bestapis.app inquiry" />
-            <input type="hidden" name="_captcha" value="false" />
             <input type="hidden" name="_template" value="table" />
+            <input
+              type="text"
+              name="_honey"
+              className="hidden"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+            />
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="text-xs uppercase tracking-[0.2em] text-slate-400">
                 Name
