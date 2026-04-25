@@ -644,7 +644,10 @@ export default function Home() {
       <div className="sticky top-0 z-50 border-b border-cyan-200/40 bg-gradient-to-r from-cyan-600 via-blue-600 to-violet-600 text-white">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-3 text-sm font-semibold sm:flex-row sm:items-center sm:justify-between">
           <span>
-            🚀 This premium domain is for sale! Acquire bestapis.app to build the
+            <span role="img" aria-label="Rocket">
+              🚀
+            </span>{" "}
+            This premium domain is for sale! Acquire bestapis.app to build the
             future of AI Agents.
           </span>
           <a
@@ -963,6 +966,7 @@ export default function Home() {
               className="hidden"
               tabIndex={-1}
               autoComplete="off"
+              aria-label="Leave this field blank"
               aria-hidden="true"
             />
             <div className="grid gap-4 sm:grid-cols-2">
