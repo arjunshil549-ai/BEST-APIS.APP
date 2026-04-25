@@ -617,8 +617,9 @@ const apiDirectory: ApiEntry[] = [
 
 export default function Home() {
   const [query, setQuery] = useState("");
-  const normalizedQuery = query.trim().toLowerCase();
+  const trimmedQuery = query.trim();
   const filteredDirectory = useMemo(() => {
+    const normalizedQuery = trimmedQuery.toLowerCase();
     if (!normalizedQuery) {
       return apiDirectory;
     }
@@ -628,7 +629,7 @@ export default function Home() {
         value.toLowerCase().includes(normalizedQuery),
       ),
     );
-  }, [normalizedQuery]);
+  }, [trimmedQuery]);
   const groupedDirectory = useMemo(
     () =>
       apiCategories.map((category) => ({
@@ -792,7 +793,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col items-start gap-2 text-sm text-slate-400">
               <span>
-                {normalizedQuery
+                {trimmedQuery
                   ? `Showing ${filteredDirectory.length} of ${apiDirectory.length} APIs`
                   : `Showing all ${apiDirectory.length} APIs`}
               </span>
