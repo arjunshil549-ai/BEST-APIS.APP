@@ -11,200 +11,304 @@ import {
   Zap,
 } from "lucide-react";
 
-const filters = ["All", "AI Models", "FinTech", "DevTools", "Data & Search"];
-
-const apiCards: Array<{
-  name: string;
+const highlights: Array<{
+  title: string;
   description: string;
-  category: string;
   icon: LucideIcon;
 }> = [
   {
-    name: "OpenAI",
+    title: "Curated AI-ready marketplace",
     description:
-      "Frontier multimodal models and tooling for building intelligent agents at scale.",
-    category: "AI Models",
+      "Handpicked APIs with verified uptime, pricing clarity, and agent-ready docs.",
     icon: Sparkles,
   },
   {
-    name: "Anthropic",
+    title: "Instant discovery + comparison",
     description:
-      "Safety-first AI models with structured outputs and enterprise-grade governance.",
-    category: "AI Models",
+      "Search, filter, and compare the Top 100 APIs across emerging categories.",
+    icon: Search,
+  },
+  {
+    title: "Security and compliance insights",
+    description:
+      "Know the auth methods, data policies, and SLAs before you integrate.",
     icon: ShieldCheck,
   },
+];
+
+const categories: Array<{
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}> = [
   {
-    name: "Stripe",
-    description:
-      "Unified payments, billing, and revenue infrastructure for global internet businesses.",
-    category: "FinTech",
-    icon: CreditCard,
-  },
-  {
-    name: "Plaid",
-    description:
-      "Connect financial data securely across accounts, transactions, and compliance APIs.",
-    category: "FinTech",
-    icon: Globe,
-  },
-  {
-    name: "Supabase",
-    description:
-      "Open-source backend platform with realtime database, auth, and storage.",
-    category: "DevTools",
-    icon: Database,
-  },
-  {
-    name: "Vercel",
-    description:
-      "Global edge platform for shipping AI-native web apps with instant previews.",
-    category: "DevTools",
-    icon: Cloud,
-  },
-  {
-    name: "Pinecone",
-    description:
-      "High-performance vector database built for semantic search and RAG pipelines.",
-    category: "Data & Search",
+    title: "AI Models",
+    description: "LLMs, multimodal reasoning, and autonomous agent runtimes.",
     icon: Cpu,
   },
   {
-    name: "Algolia",
-    description:
-      "Lightning-fast search and discovery APIs for personalization at scale.",
-    category: "Data & Search",
-    icon: Zap,
+    title: "FinTech & Payments",
+    description: "Payments, billing, fraud detection, and financial data rails.",
+    icon: CreditCard,
   },
+  {
+    title: "DevTools",
+    description: "Observability, deployment, and productivity APIs for teams.",
+    icon: Cloud,
+  },
+  {
+    title: "Data & Search",
+    description: "Vector databases, search, analytics, and AI-ready pipelines.",
+    icon: Database,
+  },
+  {
+    title: "Global Infrastructure",
+    description: "Edge compute, geo routing, and performance acceleration.",
+    icon: Globe,
+  },
+  {
+    title: "Security & Trust",
+    description: "Compliance tooling, identity, and AI governance platforms.",
+    icon: ShieldCheck,
+  },
+];
+
+const metrics = [
+  { value: "100+", label: "Premium APIs curated" },
+  { value: "42k", label: "Agent builders on waitlist" },
+  { value: "5 min", label: "Average onboarding time" },
 ];
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="sticky top-0 z-50 w-full border-b border-amber-200/30 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300 text-slate-950">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 px-6 py-3 text-center text-sm font-semibold sm:flex-row">
-          <span>
-            🚨 Premium Domain bestapis.app is for sale! Perfect for API aggregators.
-          </span>
+      <header className="border-b border-white/10 bg-slate-950/40 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
+          <div className="flex items-center gap-4">
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-400/30 bg-cyan-500/10 text-cyan-200">
+              <Sparkles className="h-6 w-6" />
+            </span>
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/70">
+                bestapis.app
+              </p>
+              <p className="text-sm text-slate-300">
+                The App Store for AI Agents
+              </p>
+            </div>
+          </div>
           <a
-            className="inline-flex items-center gap-2 underline decoration-slate-900/40 underline-offset-4 transition hover:text-slate-800"
-            href="mailto:hello@bestapis.app?subject=Domain%20Inquiry"
+            className="hidden rounded-full border border-cyan-400/40 bg-cyan-400/10 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-cyan-100 transition hover:border-cyan-300 hover:text-white md:inline-flex"
+            href="mailto:hello@bestapis.app?subject=Early%20Access%20Request"
           >
-            Click here to acquire/Contact Us
+            Request early access
           </a>
         </div>
-      </div>
+      </header>
 
       <main className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col gap-16 px-6 pb-24 pt-16">
-        <div className="pointer-events-none absolute inset-x-0 -top-32 h-64 bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-violet-500/20 blur-3xl" />
+        <div className="pointer-events-none absolute inset-x-0 -top-24 h-72 bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-violet-500/20 blur-3xl" />
 
-        <section className="relative flex flex-col gap-8">
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">
-            <Sparkles className="h-4 w-4" />
-            The App Store for AI Agents - Top 100 APIs of 2026
+        <section className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="space-y-8">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">
+              <Zap className="h-4 w-4" />
+              Top 100 APIs of 2026
+            </div>
+            <div className="space-y-5">
+              <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
+                The premium marketplace for{" "}
+                <span className="bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-400 bg-clip-text text-transparent">
+                  AI agent builders
+                </span>
+              </h1>
+              <p className="max-w-2xl text-lg text-slate-300">
+                bestapis.app curates the most reliable APIs across AI models,
+                fintech, devtools, and data infrastructure—so you can ship agentic
+                products faster with total confidence.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
+              <a
+                href="#directory"
+                className="inline-flex items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 shadow-[0_0_30px_rgba(34,211,238,0.35)] transition hover:bg-cyan-300"
+              >
+                Explore the directory
+              </a>
+              <a
+                href="mailto:hello@bestapis.app?subject=List%20my%20API"
+                className="inline-flex items-center justify-center rounded-full border border-slate-700/80 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:border-cyan-400/60 hover:text-cyan-200"
+              >
+                List your API
+              </a>
+            </div>
+            <div className="flex flex-wrap gap-6 text-sm text-slate-400">
+              {metrics.map((metric) => (
+                <div key={metric.label}>
+                  <p className="text-2xl font-semibold text-white">
+                    {metric.value}
+                  </p>
+                  <p>{metric.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="space-y-6">
-            <h1 className="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
-              <span className="bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-400 bg-clip-text text-transparent">
-                Discover the Top 100 APIs of 2026
+          <div className="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-6 shadow-lg shadow-cyan-500/10 backdrop-blur">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-white">
+                Search the marketplace
+              </h2>
+              <span className="text-xs uppercase tracking-[0.3em] text-cyan-200/70">
+                live
               </span>
-            </h1>
-            <p className="max-w-2xl text-lg text-slate-300">
-              The ultimate App Store for AI Agents. Find the perfect tools to build
-              your next breakthrough product.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <a
-              href="#directory"
-              className="inline-flex items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 shadow-[0_0_30px_rgba(34,211,238,0.35)] transition hover:bg-cyan-300"
-            >
-              Explore APIs
-            </a>
-            <div className="text-sm text-slate-400">
-              Curated across AI Models, FinTech, DevTools, and Data platforms.
+            </div>
+            <div className="relative mt-5">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+              <input
+                type="search"
+                placeholder="Search by API name, category, or capability"
+                className="w-full rounded-2xl border border-slate-800/80 bg-slate-950/70 py-4 pl-12 pr-4 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
+              />
+            </div>
+            <div className="mt-6 space-y-4">
+              {highlights.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.title}
+                    className="flex gap-4 rounded-2xl border border-slate-800/70 bg-slate-950/60 p-4"
+                  >
+                    <span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-cyan-400/30 bg-cyan-500/10 text-cyan-200">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <h3 className="text-sm font-semibold text-white">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 text-xs text-slate-400">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        <section className="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-6 shadow-lg shadow-cyan-500/5 backdrop-blur">
-          <div className="relative">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-            <input
-              type="search"
-              placeholder="Search 100 premium APIs"
-              className="w-full rounded-2xl border border-slate-800/80 bg-slate-950/70 py-4 pl-12 pr-4 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
-            />
-          </div>
-          <div className="mt-5 flex flex-wrap gap-3">
-            {filters.map((filter) => (
-              <button
-                key={filter}
-                type="button"
-                className="rounded-full border border-slate-800/70 bg-slate-950/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-300 transition hover:border-cyan-400/60 hover:text-cyan-200"
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <section id="directory" className="space-y-6">
+        <section id="directory" className="space-y-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <h2 className="text-2xl font-semibold text-white">Featured API Directory</h2>
-            <span className="text-sm text-slate-400">
-              100+ vetted APIs · Updated weekly
-            </span>
+            <div className="space-y-2">
+              <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/70">
+                premium categories
+              </p>
+              <h2 className="text-2xl font-semibold text-white">
+                Built for modern AI product teams
+              </h2>
+            </div>
+            <a
+              className="text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
+              href="mailto:hello@bestapis.app?subject=Partnership%20Inquiry"
+            >
+              Become a partner →
+            </a>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {apiCards.map((api) => {
-              const Icon = api.icon;
+            {categories.map((category) => {
+              const Icon = category.icon;
               return (
                 <div
-                  key={api.name}
-                  className="group relative overflow-hidden rounded-3xl border border-slate-800/80 bg-slate-900/40 p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/60 hover:shadow-[0_20px_40px_rgba(8,47,73,0.35)]"
+                  key={category.title}
+                  className="group rounded-3xl border border-slate-800/80 bg-slate-900/40 p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/60 hover:shadow-[0_20px_40px_rgba(8,47,73,0.35)]"
                 >
-                  <div className="flex items-center gap-4">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-400/30 bg-cyan-500/10 text-cyan-200">
-                      <Icon className="h-6 w-6" />
-                    </span>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{api.name}</h3>
-                      <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/70">
-                        {api.category}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-sm leading-relaxed text-slate-300">
-                    {api.description}
-                  </p>
-                  <span className="mt-6 inline-flex w-fit items-center rounded-full border border-slate-700/80 bg-slate-950/60 px-3 py-1 text-xs font-semibold text-slate-300">
-                    {api.category}
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-400/30 bg-cyan-500/10 text-cyan-200">
+                    <Icon className="h-6 w-6" />
                   </span>
-                  <div className="pointer-events-none absolute -right-12 -top-12 h-28 w-28 rounded-full bg-cyan-500/20 blur-3xl opacity-0 transition duration-300 group-hover:opacity-100" />
+                  <h3 className="mt-4 text-lg font-semibold text-white">
+                    {category.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-slate-300">
+                    {category.description}
+                  </p>
                 </div>
               );
             })}
           </div>
         </section>
 
-        <section className="rounded-3xl border border-cyan-400/30 bg-slate-900/60 p-8 text-center shadow-[0_0_50px_rgba(34,211,238,0.12)]">
-          <h2 className="text-2xl font-semibold text-white">
-            Want to own bestapis.app and build the future of API directories?
-          </h2>
-          <p className="mt-3 text-sm text-slate-300">
-            Secure the premium domain and launch the definitive marketplace for AI
-            infrastructure.
-          </p>
-          <a
-            className="mt-6 inline-flex items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
-            href="mailto:hello@bestapis.app?subject=Buy%20bestapis.app"
-          >
-            Buy This Domain
-          </a>
+        <section className="grid gap-8 rounded-3xl border border-cyan-400/30 bg-slate-900/60 p-8 shadow-[0_0_50px_rgba(34,211,238,0.12)] lg:grid-cols-[1.2fr_0.8fr]">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold text-white">
+              Launch agents faster with confidence
+            </h2>
+            <p className="text-sm text-slate-300">
+              bestapis.app bundles benchmark data, pricing intelligence, and
+              integration notes so your team can move from prototype to production
+              without guesswork.
+            </p>
+            <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.25em] text-cyan-200/70">
+              <span>Verified uptime</span>
+              <span>•</span>
+              <span>Compliance snapshots</span>
+              <span>•</span>
+              <span>Agent playbooks</span>
+            </div>
+          </div>
+          <div className="space-y-4 rounded-2xl border border-slate-800/80 bg-slate-950/60 p-6 text-sm text-slate-300">
+            <div className="flex items-start gap-3">
+              <ShieldCheck className="mt-1 h-5 w-5 text-cyan-200" />
+              <div>
+                <p className="font-semibold text-white">Trusted by teams</p>
+                <p>
+                  Enterprise teams rely on our curation to power AI products in
+                  healthcare, fintech, and commerce.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Globe className="mt-1 h-5 w-5 text-cyan-200" />
+              <div>
+                <p className="font-semibold text-white">Global coverage</p>
+                <p>
+                  60+ regions monitored for latency, compliance, and data
+                  residency requirements.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Zap className="mt-1 h-5 w-5 text-cyan-200" />
+              <div>
+                <p className="font-semibold text-white">Launch-ready signals</p>
+                <p>
+                  Weekly updates highlight new APIs, pricing changes, and platform
+                  stability.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
+
+      <footer className="border-t border-white/10 bg-slate-950/60">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-8 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="font-semibold text-white">bestapis.app</p>
+            <p>The premium App Store for AI Agents.</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.2em] text-cyan-200/70">
+            <a href="mailto:hello@bestapis.app?subject=Press%20Inquiry">
+              Press
+            </a>
+            <a href="mailto:hello@bestapis.app?subject=Partnerships">
+              Partnerships
+            </a>
+            <a href="mailto:hello@bestapis.app?subject=Investors">
+              Investors
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
