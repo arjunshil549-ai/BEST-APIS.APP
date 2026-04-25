@@ -75,8 +75,8 @@ const categories: Array<{
 
 const metrics = [
   { value: "100+", label: "APIs queued for launch" },
-  { value: "Global", label: "Agent builder community" },
-  { value: "Fast", label: "Onboarding to production" },
+  { value: "6", label: "Core categories live" },
+  { value: "1", label: "Unified marketplace" },
 ];
 
 export default function Home() {
@@ -259,10 +259,10 @@ export default function Home() {
             <div className="flex items-start gap-3">
               <ShieldCheck className="mt-1 h-5 w-5 text-cyan-200" />
               <div>
-                <p className="font-semibold text-white">Trusted by teams</p>
+                <p className="font-semibold text-white">Built for teams</p>
                 <p>
-                  Enterprise teams rely on our curation to power AI products in
-                  healthcare, fintech, and commerce.
+                  Designed for product teams building AI, fintech, and commerce
+                  workflows with confidence.
                 </p>
               </div>
             </div>
