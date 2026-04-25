@@ -74,9 +74,9 @@ const categories: Array<{
 ];
 
 const metrics = [
-  { value: "100+", label: "Premium APIs curated" },
-  { value: "42k", label: "Agent builders on waitlist" },
-  { value: "5 min", label: "Average onboarding time" },
+  { value: "100+", label: "APIs queued for launch" },
+  { value: "Global", label: "Agent builder community" },
+  { value: "Fast", label: "Onboarding to production" },
 ];
 
 export default function Home() {
@@ -271,8 +271,8 @@ export default function Home() {
               <div>
                 <p className="font-semibold text-white">Global coverage</p>
                 <p>
-                  60+ regions monitored for latency, compliance, and data
-                  residency requirements.
+                  Coverage monitoring for latency, compliance, and data residency
+                  requirements worldwide.
                 </p>
               </div>
             </div>
