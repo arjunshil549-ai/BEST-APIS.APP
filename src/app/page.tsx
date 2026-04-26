@@ -675,7 +675,7 @@ export default function Home() {
           </div>
           <a
             className="hidden rounded-full border border-cyan-400/40 bg-cyan-400/10 px-5 py-2 text-xs font-semibold uppercase tracking-widest text-cyan-100 transition hover:border-cyan-300 hover:text-white md:inline-flex"
-            href="mailto:hello@bestapis.app?subject=Early%20Access%20Request"
+            href="mailto:arjunshil454@gmail.com?subject=Early%20Access%20Request"
           >
             Request early access
           </a>
@@ -712,7 +712,7 @@ export default function Home() {
                 Explore the directory
               </a>
               <a
-                href="mailto:hello@bestapis.app?subject=List%20my%20API"
+                href="mailto:arjunshil454@gmail.com?subject=List%20my%20API"
                 className="inline-flex items-center justify-center rounded-full border border-slate-700/80 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:border-cyan-400/60 hover:text-cyan-200"
               >
                 List your API
@@ -802,7 +802,7 @@ export default function Home() {
               </span>
               <a
                 className="text-sm font-semibold text-cyan-200 transition hover:text-cyan-100"
-                href="mailto:hello@bestapis.app?subject=Partnership%20Inquiry"
+                href="mailto:arjunshil454@gmail.com?subject=Partnership%20Inquiry"
               >
                 Become a partner →
               </a>
@@ -946,15 +946,15 @@ export default function Home() {
               Prefer email? Reach us at{" "}
               <a
                 className="font-semibold text-cyan-200 hover:text-cyan-100"
-                href="mailto:hello@bestapis.app"
+                href="mailto:arjunshil454@gmail.com"
               >
-                hello@bestapis.app
+                arjunshil454@gmail.com
               </a>
               .
             </div>
           </div>
           <form
-            action="https://formsubmit.co/hello@bestapis.app"
+            action="https://formsubmit.co/arjunshil454@gmail.com"
             method="POST"
             className="space-y-4"
           >
@@ -1033,13 +1033,13 @@ export default function Home() {
             <p>The premium App Store for AI Agents.</p>
           </div>
           <div className="flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.2em] text-cyan-200/70">
-            <a href="mailto:hello@bestapis.app?subject=Press%20Inquiry">
+            <a href="mailto:arjunshil454@gmail.com?subject=Press%20Inquiry">
               Press
             </a>
-            <a href="mailto:hello@bestapis.app?subject=Partnerships">
+            <a href="mailto:arjunshil454@gmail.com?subject=Partnerships">
               Partnerships
             </a>
-            <a href="mailto:hello@bestapis.app?subject=Investors">
+            <a href="mailto:arjunshil454@gmail.com?subject=Investors">
               Investors
             </a>
           </div>
